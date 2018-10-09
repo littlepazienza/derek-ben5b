@@ -48,9 +48,12 @@ public class PeriodicTable
         ArrayList<String> ans = new ArrayList<String>();
         for(String x:symbols)
         {
-            if(x.equals(of.substring(0, x.length())))
-                ans.add(x);
-        }
+            if(x.toUpperCase().equals(of.toUpperCase().substring(0, x.length())))
+            {
+							System.out.println("Element Option: " +  x );
+							ans.add(x);
+        		}
+				}
         return ans;
     }
 
@@ -76,19 +79,25 @@ public class PeriodicTable
      */
   public Boolean search(String goal, ArrayList<String> solution)
   {
+		System.out.println( goal );
     if (goal.length() == 0)
-      return true;
-    else 
-    {
-        for(String x:prefixMatches(goal))
-        {
-            if(search(goal.substring(x.length()-1, goal.length()), solution))
-            {
-                solution.add(solution.size() - solution.size(), x);
-                return true;
-            }
-        }
-        return false;
+      return false;
+    else if(prefixMatches(goal).size() == 0)
+				return false;
+		else
+		{	
+      for(String x:prefixMatches(goal))
+      {
+        	solution.add(x);
+					System.out.println( "adding solution " + x + "\nCurrent solution: " + solution.toString());
+					if(goal.length() - x.length() <= 0)
+						return true;
+				  else if(search(goal.substring(x.length(), goal.length()), solution))
+						return true;
+					else
+						solution.remove(solution.size()-1);
+      }
+      return false;
     }
     
   }
