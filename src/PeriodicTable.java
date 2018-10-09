@@ -45,7 +45,7 @@ public class PeriodicTable
      */
     public static ArrayList<String> prefixMatches(String of)
     {
-        ArrayList<String> ans = new ArrayList<String>();
+				ArrayList<String> ans = new ArrayList<String>();
         for(String x:symbols)
         {
             if(x.toUpperCase().equals(of.toUpperCase().substring(0, x.length())))
@@ -89,14 +89,19 @@ public class PeriodicTable
       for(String x:prefixMatches(goal))
       {
         	solution.add(x);
-					System.out.println( "adding solution " + x + "\nCurrent solution: " + solution.toString());
-					if(goal.length() - x.length() <= 0)
+					System.out.println( "adding solution " + x + "\nCurrent solution: " + solution.toString());	
+				  if( (goal.length() - ( 2 * x.length()) ) <= 0 )
+					{
 						return true;
-				  else if(search(goal.substring(x.length(), goal.length()), solution))
-						return true;
+					}
 					else
-						solution.remove(solution.size()-1);
-      }
+					{
+						if(search(goal.substring(x.length(), goal.length()), solution))
+							return true;
+						else
+							solution.remove(solution.size()-1);
+      		}
+			}
       return false;
     }
     
